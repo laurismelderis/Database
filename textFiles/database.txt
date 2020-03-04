@@ -1,0 +1,7 @@
+id:
+Autors:
+Nosaukums:
+Uz vietas?:
+Lasitaja kods:
+Kurs panema gramatu?:
+Gramatas atgriesanas datums:
