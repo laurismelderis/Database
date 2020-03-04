@@ -1,1 +1,22 @@
-ID AUTORS NOSAUKUMS UZ_VIETAS LASITAJA_KODS GRAMATAS_NJEMEJS ATGRIESANAS_DATUMS
+ID   AUTORS       NOSAUKUMS                UZ_VIETAS LASITAJA_KODS GRAMATAS_NJEMEJS ATGRIESANAS_DATUMS
+1.   J.Kreicbergs Causes of Road Accidents y         191rdb001     -                -
+2.   J.Kreicbergs Causes of Road Accidents n         191rdb002     sanja            -
+3.   J.Kreicbergs Causes of Road Accidents n         191rdb003     anna             -
+4.   J.Kreicbergs Causes of Road Accidents n         191rdb004     aleksandrs       -
+5.   J.Kreicbergs Causes of Road Accidents n         191rdb005     jubalts          -
+6.   J.Kreicbergs Causes of Road Accidents n         191rdb006     talivaldis       -
+7.   J.Kreicbergs Causes of Road Accidents y         191rdb007     -                -
+8.   J.Kreicbergs Causes of Road Accidents y         191rdb008     -                -
+9.   J.Kreicbergs Causes of Road Accidents y         191rdb009     niks             -
+10.  J.Kreicbergs Causes of Road Accidents y         191rdb010     -                -
+
+1. J.Kreicbergs Causes of Road Accidents y 191rdb001 - -
+2. J.Kreicbergs Causes of Road Accidents n 191rdb002 sanja -
+3. J.Kreicbergs Causes of Road Accidents n 191rdb003 anna -
+4. J.Kreicbergs Causes of Road Accidents n 191rdb004 aleksandrs -
+5. J.Kreicbergs Causes of Road Accidents n 191rdb005 jubalts -
+6. J.Kreicbergs Causes of Road Accidents n 191rdb006 talivaldis -
+7. J.Kreicbergs Causes of Road Accidents y 191rdb007 - -
+8. J.Kreicbergs Causes of Road Accidents y 191rdb008 - -
+9. J.Kreicbergs Causes of Road Accidents y 191rdb009 niks -
+10. J.Kreicbergs Causes of Road Accidents y 191rdb010 - -
