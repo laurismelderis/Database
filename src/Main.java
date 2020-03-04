@@ -27,12 +27,10 @@ public class Main {
 			return;
 		}
 		db.init(txtFileName + ".txt");
-		if (!db.file.exists()){
-			System.out.println("Datubaze neeksiste");
-			return;
+		if (db.streaming == true){
+			System.out.println("DATUBAZE - " + txtFileName + ".txt - TIKKA ATVERTA");
+			db.outputTable();
 		}
-		System.out.println("DATUBAZE - " + txtFileName + ".txt - TIKKA ATVERTA");
-		db.outputTable();
 		do {
 			System.out.println("\nIzvelieties attiecigo numuru, lai izpilditu aprakstito komandu:");
 			mainMenu();
@@ -58,6 +56,8 @@ public class Main {
 				case 6:
 				break;
 				case 7:
+				break;
+				case 8:
 					System.out.println("Pieejamas datubazes:\n" + db.fileList);
 					System.out.print("Datubazes nosaukums: ");
 					try {
@@ -65,9 +65,10 @@ public class Main {
 					} catch (IOException e){
 						System.out.println("input-output error");
 					}
-					File check = new File(db.filePath + txtFileName);
+					File check = new File(db.filePath + txtFileName + ".txt");
 					if (check.exists()){
 						db.closeStream();
+						System.out.println("DATUBAZE - " + txtFileName + ".txt - TIKKA ATVERTA");
 						db.init(txtFileName + ".txt");
 						db.outputTable();
 					} else {
@@ -91,12 +92,13 @@ public class Main {
 	public static void mainMenu(){
 		System.out.println();
 		System.out.println(" 1 --> Apskatit datubazi");
-		System.out.println(" 2 --> Dzest vienumus");
-		System.out.println(" 3 --> Rediget vienumus");
-		System.out.println(" 4 --> Kartot vienumus");
-		System.out.println(" 5 --> Meklet vienumus");
-		System.out.println(" 6 --> Pieejamais gramatu skaits");
-		System.out.println(" 7 --> Atvert jaunu datubazi");
+		System.out.println(" 2 --> Pievienot jaunu vienumu");
+		System.out.println(" 3 --> Dzest vienumus");
+		System.out.println(" 4 --> Rediget vienumus");
+		System.out.println(" 5 --> Kartot vienumus"); //Kartot pec autora un gr. nos.
+		System.out.println(" 6 --> Meklet vienumus pec autora");
+		System.out.println(" 7 --> Pieejamais gramatu skaits");
+		System.out.println(" 8 --> Atvert jaunu datubazi");
 		System.out.println(" 0 --> Iziet no programmas");
 		System.out.println();
 	}

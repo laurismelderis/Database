@@ -1,7 +1,7 @@
 1. J.Kreicbergs Causes_of_Road_Accidents Ja - - -
 2. B.Jurkalns Maizes_pavara_gramata Ne 191rdb002 Sanja 25/05/2020
 3. K.Stromberga 100_veidi_ka_pamest_puisi Ne 191rdb003 Anna 15/04/2020
-4. Z.Stiepa Rakesu_inzinierija n 191rdb004 Aleksandrs 02/07/2020
+4. Z.Stiepa Rakesu_inzinierija Ne 191rdb004 Aleksandrs 02/07/2020
 5. A.Kristals Ka_izdzivot_bez_programmesanas Ne 191rdb005 Jubalts 21/03/2020
 6. S.Ansasa Tava_mamma_labaka_mamma Ne 191rdb006 Talivaldis 10/04/2020
 7. L.Melderis Karosu_banka Ja - - -
