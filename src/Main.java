@@ -12,25 +12,15 @@ public class Main {
 	public static void main(String []args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String txtFileName = "";
+		Database db = null;
 		Scanner sc = new Scanner(System.in);
-		Database db = new Database();
 		int entered = -1;
 		boolean exit = false;
 		System.out.println("Lauris Melderis 14 191RDB078");
 		System.out.println("\nINFORMATIVA SISTEMA BIBLIOTEKAI\n");
-		System.out.println("PIEEJAMAS DATUBAZES:\n" + db.fileList);
-		System.out.print("Izvelieties datubazi (piem. database): ");
-		try {
-			txtFileName = br.readLine();
-		} catch (IOException e){
-			System.out.println("input-output error");
-			return;
-		}
-		db.init(txtFileName + ".txt");
-		if (db.streaming == true){
-			System.out.println("DATUBAZE - " + txtFileName + ".txt - TIKKA ATVERTA");
-			db.outputTable();
-		}
+		System.out.println("PIEEJAMAS DATUBAZES:\n" + fileList());
+		db = listFilesAndOpenDatabase(txtFileName, br, db);
+		
 		do {
 			System.out.println("\nIzvelieties attiecigo numuru, lai izpilditu aprakstito komandu:");
 			mainMenu();
@@ -58,23 +48,7 @@ public class Main {
 				case 7:
 				break;
 				case 8:
-					System.out.println("Pieejamas datubazes:\n" + db.fileList);
-					System.out.print("Datubazes nosaukums: ");
-					try {
-						txtFileName = br.readLine();
-					} catch (IOException e){
-						System.out.println("input-output error");
-					}
-					File check = new File(db.filePath + txtFileName + ".txt");
-					if (check.exists()){
-						db.closeStream();
-						System.out.println("DATUBAZE - " + txtFileName + ".txt - TIKKA ATVERTA");
-						db.init(txtFileName + ".txt");
-						db.outputTable();
-					} else {
-						System.out.println("Datubaze neeksiste!");
-					}
-					
+					db = openNewDatabase(br, txtFileName, db);
 				break;
 				case 0:
 					System.out.println("Visu labu!");
@@ -101,5 +75,44 @@ public class Main {
 		System.out.println(" 8 --> Atvert jaunu datubazi");
 		System.out.println(" 0 --> Iziet no programmas");
 		System.out.println();
+	}
+	public static Database listFilesAndOpenDatabase(String txtFileName, BufferedReader br, Database db) throws IOException{
+		System.out.print("Izvelieties datubazi (piem. database): ");
+		txtFileName = br.readLine();
+		db = new Database(txtFileName + ".txt");
+		if (db.streaming == true){
+			System.out.println("DATUBAZE - " + txtFileName + ".txt - TIKKA ATVERTA");
+			db.outputTable();
+			return db;
+		}
+		return null;
+	}
+	public static String fileList(){
+		String list = "";
+		File []files = new File("textFiles/").listFiles();
+		for (int i = 0; i < files.length;i++){
+			if(files[i].isFile()){
+				list += files[i].getName() + " ";
+			}
+		}
+		return list;
+	}
+	public static Database openNewDatabase(BufferedReader br, String txtFileName, Database db)throws IOException{
+		System.out.println("Pieejamas datubazes:\n" + fileList());
+		System.out.print("Datubazes nosaukums: ");
+		txtFileName = br.readLine();
+		File check = new File("textFiles/" + txtFileName + ".txt");
+		if (check.exists()){
+			if (db != null){
+				db.closeStream();
+			}
+			System.out.println("DATUBAZE - " + txtFileName + ".txt - TIKKA ATVERTA");
+			db = new Database(txtFileName + ".txt");
+			db.outputTable();
+			return db;
+		} else {
+			System.out.println("Datubaze neeksiste!");
+			return null;
+		}		
 	}
 }

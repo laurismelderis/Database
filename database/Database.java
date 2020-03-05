@@ -14,12 +14,8 @@ public class Database{
 	public File file = null;
 	public boolean streaming = false;
 	public String filePath = "textFiles/";
-	public String fileList = "";
 	public String fileName = "";
-	public Database(){
-		fileList();
-	}
-	public void init(String txtName) throws IOException{
+	public Database(String txtName) throws IOException{
 		fileName = txtName;
 		file = new File(filePath + fileName);
 		if (file.exists()){
@@ -27,23 +23,15 @@ public class Database{
 		} else {
 			closeStream();
 			System.out.println("Datu baze neeksiste!");
+			return;
 		}
 		if (checkText() == false){
 			closeStream();
 			System.out.println("Datu baze neatbilst formatam vai ir tuksa!");
+			return;
 		}
-		
 	}
-	public void fileList(){
-		String list = "";
-		File []files = new File(filePath).listFiles();
-		for (int i = 0; i < files.length;i++){
-			if(files[i].isFile()){
-				list += files[i].getName() + " ";
-			}
-		}
-		fileList = list;
-	}
+	
 	public String readText() throws IOException{
 		String text = "", add = " ";
 		BufferedReader br = new BufferedReader(new FileReader(file));
