@@ -33,7 +33,7 @@ public class Main {
 			}
 			switch(entered){
 				case 1:
-					db.outputTable();
+					openDatabaseTable(db);
 				break;
 				case 2:
 				break;
@@ -51,8 +51,8 @@ public class Main {
 					db = openNewDatabase(br, txtFileName, db);
 				break;
 				case 0:
-					System.out.println("Visu labu!");
-					exit = true;
+					
+					exit = exitProgram();
 				break;
 			}
 		} while(exit == false);
@@ -106,6 +106,9 @@ public class Main {
 			if (db != null){
 				db.closeStream();
 			}
+			if (db.streaming == false){
+				return db;
+			}
 			System.out.println("DATUBAZE - " + txtFileName + ".txt - TIKKA ATVERTA");
 			db = new Database(txtFileName + ".txt");
 			db.outputTable();
@@ -114,5 +117,16 @@ public class Main {
 			System.out.println("Datubaze neeksiste!");
 			return null;
 		}		
+	}
+	public static void openDatabaseTable(Database db) throws IOException{
+		if (db == null){
+			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
+		} else {
+			db.outputTable();
+		}
+	}
+	public static boolean exitProgram(){
+		System.out.println("Visu labu!");
+		return true;
 	}
 }
