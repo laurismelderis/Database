@@ -3,3 +3,4 @@ rule javac
 
 build src/Main.class: javac src/Main.java
 build database/Database.class: javac database/Database.java
+build database/Sort.class: javac database/Sort.java

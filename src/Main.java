@@ -13,8 +13,6 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String txtFileName = "";
 		Database db = null;
-		Scanner sc = new Scanner(System.in);
-		int entered = -1;
 		boolean exit = false;
 		System.out.println("Lauris Melderis 14 191RDB078");
 		System.out.println("\nINFORMATIVA SISTEMA BIBLIOTEKAI\n");
@@ -24,24 +22,20 @@ public class Main {
 		do {
 			System.out.println("\nIzvelieties attiecigo numuru, lai izpilditu aprakstito komandu:");
 			mainMenu();
-			System.out.print("Ievade: ");
-			if (sc.hasNextInt()){
-				entered = sc.nextInt();
-			} else {
-				System.out.println("input-output error");
-				return;
-			}
+			int entered = enterNumber();
 			switch(entered){
 				case 1:
 					openDatabaseTable(db);
 				break;
 				case 2:
+					addRecord(db);
 				break;
 				case 3:
 				break;
 				case 4:
 				break;
 				case 5:
+					sort(db);
 				break;
 				case 6:
 				break;
@@ -51,7 +45,6 @@ public class Main {
 					db = openNewDatabase(br, txtFileName, db);
 				break;
 				case 0:
-					
 					exit = exitProgram();
 				break;
 			}
@@ -79,9 +72,9 @@ public class Main {
 	public static Database listFilesAndOpenDatabase(String txtFileName, BufferedReader br, Database db) throws IOException{
 		System.out.print("Izvelieties datubazi (piem. database): ");
 		txtFileName = br.readLine();
-		db = new Database(txtFileName + ".txt");
+		db = new Database(txtFileName);
 		if (db.streaming == true){
-			System.out.println("DATUBAZE - " + txtFileName + ".txt - TIKKA ATVERTA");
+			System.out.println("DATUBAZE - " + txtFileName + " - TIKKA ATVERTA");
 			db.outputTable();
 			return db;
 		}
@@ -97,6 +90,53 @@ public class Main {
 		}
 		return list;
 	}
+	public static int enterNumber() throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		System.out.print("Ievade: ");
+		String str = br.readLine();
+		int entered = -1;
+		try {
+			entered = Integer.parseInt(str);
+		} catch (Exception e){
+			System.out.println("Ievadiet skaitli nevis kadu citu simbolu!");
+		}
+		return entered;
+	}
+	//1
+	public static void openDatabaseTable(Database db) throws IOException{
+		if (db == null){
+			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
+		} else {
+			db.outputTable();
+		}
+	}
+	//2
+	public static void addRecord(Database db){
+		System.out.println("Ievadiet datus: ");
+	}
+	//5
+	public static void sort(Database db) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String veids = null;
+		String prev = veids;
+		System.out.println("Kartosanas veidi: ");
+		System.out.println("autors gramata");
+		boolean check = false;
+		System.out.print("Ievadiet kartosanas veidu: ");
+		veids = br.readLine();
+		if (veids)
+		switch(veids){
+			case "autors":
+				db.sortTextArr("autors");
+			break;
+			case "gramata":
+				db.sortTextArr("gramata");
+			break;
+			default:
+				System.out.println("Kartosanas veids nepastav");
+		}
+	}
+	//8
 	public static Database openNewDatabase(BufferedReader br, String txtFileName, Database db)throws IOException{
 		System.out.println("Pieejamas datubazes:\n" + fileList());
 		System.out.print("Datubazes nosaukums: ");
@@ -106,11 +146,11 @@ public class Main {
 			if (db != null){
 				db.closeStream();
 			}
+			db = new Database(txtFileName);
 			if (db.streaming == false){
-				return db;
+				return null;
 			}
-			System.out.println("DATUBAZE - " + txtFileName + ".txt - TIKKA ATVERTA");
-			db = new Database(txtFileName + ".txt");
+			System.out.println("DATUBAZE - " + txtFileName + " - TIKKA ATVERTA");
 			db.outputTable();
 			return db;
 		} else {
@@ -118,13 +158,7 @@ public class Main {
 			return null;
 		}		
 	}
-	public static void openDatabaseTable(Database db) throws IOException{
-		if (db == null){
-			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
-		} else {
-			db.outputTable();
-		}
-	}
+	//0
 	public static boolean exitProgram(){
 		System.out.println("Visu labu!");
 		return true;
