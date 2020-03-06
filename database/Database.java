@@ -82,6 +82,26 @@ public class Database{
 				System.out.println("Kartosanas veids pec " + veids + " nepastav");
 		}
 	}
+	public void deleteLine(int line) throws IOException{
+		File newFile = new File(filePath + "/CopyOf" + fileName);
+		BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
+		String []txt = getText(file);
+		for (int i = 0; i < txt.length; i++){
+			if (i == line){
+				continue;
+			}
+			if (i == txt.length-1){
+				bw.write(txt[i] + "^");
+				break;
+			}
+			bw.write(txt[i] + "^");
+			bw.newLine();
+		}
+		bw.close();
+		lineCount--;
+		pasteFileText(newFile);
+		newFile.delete();
+	}
 	public void replaceWord(int line, String prevText, String newText) throws IOException{
 		File newFile = new File(filePath + "/CopyOf" + fileName);
 		BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
@@ -150,15 +170,15 @@ public class Database{
 		br.close();
 		return vec;
 	}
-	public String[][] getSplitText() throws IOException{
+	public String[][] getSplitText(File file) throws IOException{
 		String []vec = getText(file);
 		String []text = getText(file); 
-		String [][]matrix = new String[lineCount][columns]; 
-		for (int i = 0; i < matrix.length; i++){
+		String [][]matrix = new String[columns][lineCount]; 
+		for (int i = 0; i < lineCount; i++){
 			String split = text[i];
 			String []splited = split.split("\\s");
-			for (int j = 0; j < matrix[i].length; j++){
-				matrix[i][j] = splited[j];
+			for (int j = 0; j < columns; j++){
+				matrix[j][i] = splited[j];
 			}
 		}
 		return matrix;
@@ -178,6 +198,33 @@ public class Database{
 		}
 		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
 		br.close();
+	}
+	public void getAvailableBooks() throws IOException{
+		String [][]matrix = getSplitText(file);
+		int counter = 0;
+		for (int i = 0; i < matrix[2].length; i++){
+			if(matrix[2][i].equals("Ja")){
+				counter++;
+			}
+		}
+		System.out.println("Paslaik ir pieejamas " + counter + " gramatas:");
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
+		System.out.println("|ID    |AUTORS          |NOSAUKUMS                      |UZ_VIETAS |LASITAJA_KODS |GRAMATAS_NEMEJS     |ATGRIESANAS_DATUMS|");
+		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
+		String add = "";
+		int inc = 1;
+		while((add = br.readLine()) != null){
+			String []vec = add.split("\\s");
+			if (vec[2].equals("Ja")){
+				System.out.printf("|%-5d |%-15s |%-30s |%-9s |%-13s |%-19s |%-17s |\n",
+					inc, vec[0], vec[1], vec[2], vec[3], vec[4], vec[5]);
+				inc++;
+			}
+		}
+		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
+		br.close();
+
 	}
 	public boolean checkFormat() throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(file));

@@ -31,6 +31,7 @@ public class Main {
 					addRecord(db);
 				break;
 				case 3:
+					deleteLine(db);
 				break;
 				case 4:
 				break;
@@ -40,6 +41,7 @@ public class Main {
 				case 6:
 				break;
 				case 7:
+					bookCount(db);
 				break;
 				case 8:
 					db = openNewDatabase(br, txtFileName, db);
@@ -118,6 +120,10 @@ public class Main {
 		String record = "";
 		boolean run = true;
 		String param = "";
+		if (db == null){
+			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
+			return;
+		} 
 		while (run){
 			System.out.print("Ievadiet autora varda pirmo burtu un uzvardu (piem. L.Ozols): ");
 			param = br.readLine();
@@ -156,11 +162,43 @@ public class Main {
 		db.addRecord(record);
 		System.out.println("Gramata - " + record + "- tika pievienota datubazei");
 	}
+	//3
+	public static void deleteLine(Database db) throws IOException{
+		if (db == null){
+			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
+			return;
+		}
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String lineText = null;
+		int line = 0;
+		System.out.print("Ievadiet datubazes tabulas rindinas ciparu (1 - "+(db.lineCount)+"), lai izdzestu to: ");
+		try{
+			lineText = br.readLine();
+			line = Integer.parseInt(lineText);
+		} catch(Exception e) {
+			System.out.println("Ievadiet skaitli!");
+			return;
+		}
+		if (line <= 0 || line > db.lineCount){
+			System.out.println("Ievadiet pieejamo skaitli!");
+			return;
+		}
+		System.out.print("Vai jus velaties izdzest " + line + " rindinu no datubazes (y/n)?: ");
+		String check = "no";
+		check = br.readLine();
+		if (check.equals("yes") || check.equals("y") || check.equals("Y") || check.equals("Yes")){
+			db.deleteLine(line-1);
+		}
+	}
 	//5
 	public static void sort(Database db) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String veids = null;
 		String prev = veids;
+		if (db == null){
+			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
+			return;
+		} 
 		System.out.println("Kartosanas veidi: ");
 		System.out.println("autors gramata");
 		boolean check = false;
@@ -176,6 +214,14 @@ public class Main {
 			default:
 				System.out.println("Kartosanas veids nepastav");
 		}
+	}
+	//7
+	public static void bookCount(Database db) throws IOException{
+		if (db == null){
+			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
+			return;
+		}
+		db.getAvailableBooks();
 	}
 	//8
 	public static Database openNewDatabase(BufferedReader br, String txtFileName, Database db)throws IOException{
