@@ -36,6 +36,18 @@ public class Database{
 		}
 	}
 	
+	public void addRecord(String newRecord) throws IOException{
+		String []record = newRecord.split("\\s");
+		BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		record[0] = record[0].substring(0, 1).toUpperCase() + record[0].substring(1, 2)
+		+ record[0].substring(2, 3).toUpperCase() + record[0].substring(3);
+		record[1] = record[1].substring(0, 1).toUpperCase() + record[1].substring(1);
+		bw.newLine();
+		bw.append(record[0] + " " + record[1] + " Ja - - -");
+		bw.close();
+		lineCount++;
+	}
 	public String readText() throws IOException{
 		String text = "", add = " ";
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -56,13 +68,13 @@ public class Database{
 		switch(veids){
 			case "autors":
 				sakartots = sr.quicksort(vec.clone(), 0);
-				arrayToFile(sakartots);
+				arrayToFileFormat(sakartots);
 				outputTable();
 				System.out.println("Tabula tikka sakartota pec autora uzvarda!");
 			break;
 			case "gramata":
 				sakartots = sr.quicksort(vec.clone(), 1);
-				arrayToFile(sakartots);
+				arrayToFileFormat(sakartots);
 				outputTable();
 				System.out.println("Tabula tikka sakartota pec gramatas nosaukuma!");
 			break;
@@ -95,7 +107,7 @@ public class Database{
 		pasteFileText(newFile);
 		newFile.delete();
 	}
-	public void arrayToFile(String[] arr) throws IOException{
+	public void arrayToFileFormat(String[] arr) throws IOException{
 		File newFile = new File(filePath + "/CopyOf" + fileName);
 		BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
 		for (String a: arr){
