@@ -43,8 +43,12 @@ public class Database{
 		record[0] = record[0].substring(0, 1).toUpperCase() + record[0].substring(1, 2)
 		+ record[0].substring(2, 3).toUpperCase() + record[0].substring(3);
 		record[1] = record[1].substring(0, 1).toUpperCase() + record[1].substring(1);
-		bw.newLine();
-		bw.append(record[0] + " " + record[1] + " Ja - - -");
+		if (br.readLine() == null){
+			bw.append(record[0] + " " + record[1] + " Ja - nav --/--/----");
+		} else {
+			bw.newLine();
+			bw.append(record[0] + " " + record[1] + " Ja - nav --/--/----");
+		}
 		bw.close();
 		lineCount++;
 	}
@@ -102,20 +106,26 @@ public class Database{
 		pasteFileText(newFile);
 		newFile.delete();
 	}
-	public void replaceWord(int line, String prevText, String newText) throws IOException{
+	public void replaceLineWord(int line, String prevText, String newText) throws IOException{
 		File newFile = new File(filePath + "/CopyOf" + fileName);
 		BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
 		String []txt = getText(file);
 		int counter = 0;
+		boolean taken = false;
 		for (String a: txt){
 			String []check = a.split("\\s");
 			for (int i = 0; i < check.length; i++){
-				if (i == check.length-1){
+				if (i == check.length-1 && 
+					prevText.equals(check[i]) && line == counter && taken == false){
+					bw.write(newText + " ");
+					taken = true;
+				} else if (i == check.length-1){
 					bw.write(check[i] + "^");
 					break;
 				}
-				if (prevText.equals(check[i]) && line == counter){
+				if (prevText.equals(check[i]) && line == counter && taken == false){
 					bw.write(newText + " ");
+					taken = true;
 				} else {
 					bw.write(check[i] + " ");
 				}
@@ -126,6 +136,10 @@ public class Database{
 		bw.close();
 		pasteFileText(newFile);
 		newFile.delete();
+	}
+	public String getLineWord(int line, int column) throws IOException{
+		String [][]matrix = getSplitText(file);
+		return matrix[column][line];
 	}
 	public void arrayToFileFormat(String[] arr) throws IOException{
 		File newFile = new File(filePath + "/CopyOf" + fileName);
@@ -174,6 +188,9 @@ public class Database{
 		String []vec = getText(file);
 		String []text = getText(file); 
 		String [][]matrix = new String[columns][lineCount]; 
+		for (int i = 0; i < text.length;i++){
+			System.out.println(text[i]);
+		}
 		for (int i = 0; i < lineCount; i++){
 			String split = text[i];
 			String []splited = split.split("\\s");
@@ -194,6 +211,24 @@ public class Database{
 			String []vec = add.split("\\s");
 			System.out.printf("|%-5d |%-15s |%-30s |%-9s |%-13s |%-19s |%-17s |\n",
 				inc, vec[0], vec[1], vec[2], vec[3], vec[4], vec[5]);
+			inc++;
+		}
+		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
+		br.close();
+	}
+	public void outputLine(int line) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
+		System.out.println("|ID    |AUTORS          |NOSAUKUMS                      |UZ_VIETAS |LASITAJA_KODS |GRAMATAS_NEMEJS     |ATGRIESANAS_DATUMS|");
+		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
+		String add = "";
+		int inc = 1;
+		while((add = br.readLine()) != null){
+			String []vec = add.split("\\s");
+			if (inc == line){
+				System.out.printf("|%-5d |%-15s |%-30s |%-9s |%-13s |%-19s |%-17s |\n",
+					inc, vec[0], vec[1], vec[2], vec[3], vec[4], vec[5]);
+			}
 			inc++;
 		}
 		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
