@@ -117,8 +117,9 @@ public class Database{
 			for (int i = 0; i < check.length; i++){
 				if (i == check.length-1 && 
 					prevText.equals(check[i]) && line == counter && taken == false){
-					bw.write(newText + " ");
+					bw.write(newText + "^");
 					taken = true;
+					break;
 				} else if (i == check.length-1){
 					bw.write(check[i] + "^");
 					break;
@@ -187,10 +188,7 @@ public class Database{
 	public String[][] getSplitText(File file) throws IOException{
 		String []vec = getText(file);
 		String []text = getText(file); 
-		String [][]matrix = new String[columns][lineCount]; 
-		for (int i = 0; i < text.length;i++){
-			System.out.println(text[i]);
-		}
+		String [][]matrix = new String[columns][lineCount];
 		for (int i = 0; i < lineCount; i++){
 			String split = text[i];
 			String []splited = split.split("\\s");
@@ -260,6 +258,13 @@ public class Database{
 		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
 		br.close();
 
+	}
+	public boolean checkAvailableBook(int id) throws IOException{
+		String [][]matrix = getSplitText(file);
+		if(matrix[2][id].equals("Ja")){
+			return true;
+		}
+		return false;
 	}
 	public boolean checkFormat() throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(file));

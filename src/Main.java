@@ -10,52 +10,50 @@ import database.*;
 
 public class Main {
 	public static void main(String []args) throws Exception{
-		Database db = new Database("database");
-		editRecord(db);
-		// BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		// String txtFileName = "";
-		// Database db = null;
-		// boolean exit = false;
-		// System.out.println("Lauris Melderis 14 191RDB078");
-		// System.out.println("\nINFORMATIVA SISTEMA BIBLIOTEKAI\n");
-		// System.out.println("PIEEJAMAS DATUBAZES:\n" + fileList());
-		// db = listFilesAndOpenDatabase(txtFileName, br, db);
-		// do {
-		// 	System.out.println("\nIzvelieties attiecigo numuru, lai izpilditu aprakstito komandu:");
-		// 	mainMenu();
-		// 	int entered = enterNumber();
-		// 	switch(entered){
-		// 		case 1:
-		// 			openDatabaseTable(db);
-		// 		break;
-		// 		case 2:
-		// 			addRecord(db);
-		// 		break;
-		// 		case 3:
-		// 			deleteLine(db);
-		// 		break;
-		// 		case 4:
-		// 			editRecord(db);
-		// 		break;
-		// 		case 5:
-		// 			sort(db);
-		// 		break;
-		// 		case 6:
-		// 		break;
-		// 		case 7:
-		// 			bookCount(db);
-		// 		break;
-		// 		case 8:
-		// 			db = openNewDatabase(br, txtFileName, db);
-		// 		break;
-		// 		case 9:
-		// 			db = openNewDatabase(br, txtFileName, db);
-		// 		break;
-		// 		case 0:
-		// 			exit = exitProgram();
-		// 		break;
-		// 	}
-		// } while(exit == false);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String txtFileName = "";
+		Database db = null;
+		boolean exit = false;
+		System.out.println("Lauris Melderis 14 191RDB078");
+		System.out.println("\nINFORMATIVA SISTEMA BIBLIOTEKAI\n");
+		System.out.println("PIEEJAMAS DATUBAZES:\n" + fileList());
+		db = listFilesAndOpenDatabase(txtFileName, br, db);
+		do {
+			System.out.println("\nIzvelieties attiecigo numuru, lai izpilditu aprakstito komandu:");
+			mainMenu();
+			int entered = enterNumber();
+			switch(entered){
+				case 1:
+					openDatabaseTable(db);
+				break;
+				case 2:
+					addRecord(db);
+				break;
+				case 3:
+					deleteLine(db);
+				break;
+				case 4:
+					editRecord(db);
+				break;
+				case 5:
+					sort(db);
+				break;
+				case 6:
+				break;
+				case 7:
+					bookCount(db);
+				break;
+				case 8:
+					db = openNewDatabase(br, txtFileName, db);
+				break;
+				case 9:
+					takeOutBook(db);
+				break;
+				case 0:
+					exit = exitProgram();
+				break;
+			}
+		} while(exit == false);
 	}
 	public static void output(String []arr){
 		for (String a: arr){
@@ -68,8 +66,8 @@ public class Main {
 		System.out.println(" 1 --> Apskatit datubazi");
 		System.out.println(" 2 --> Pievienot jaunu vienumu");
 		System.out.println(" 3 --> Dzest vienumus");
-		System.out.println(" 4 --> Rediget vienumus--");
-		System.out.println(" 5 --> Kartot vienumus"); //Kartot pec autora un gr. nos.
+		System.out.println(" 4 --> Rediget vienumus");
+		System.out.println(" 5 --> Kartot vienumus");
 		System.out.println(" 6 --> Meklet vienumus pec autora---");
 		System.out.println(" 7 --> Pieejamais gramatu skaits");
 		System.out.println(" 8 --> Atvert jaunu datubazi");
@@ -166,9 +164,8 @@ public class Main {
 			record += param.trim().replace(' ', '_') + " ";
 			run = false;
 		}
-		System.out.println(record);
 		db.addRecord(record);
-		System.out.println("Gramata - " + record + "- tika pievienota datubazei");
+		System.out.println("Gramata - " + record.replaceAll("_"," ") + "- tika pievienota datubazei");
 	}
 	
 	//3
@@ -180,6 +177,7 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String lineText = null;
 		int line = 0;
+		System.out.println("Ja velaties atcelt dzesanu ievadiet 0!");
 		System.out.print("Ievadiet datubazes tabulas rindinas ciparu (1 - "+(db.lineCount)+"), lai izdzestu to: ");
 		try{
 			lineText = br.readLine();
@@ -188,16 +186,20 @@ public class Main {
 			System.out.println("Ievadiet skaitli!");
 			return;
 		}
-		if (line <= 0 || line > db.lineCount){
+		if (line < 0 || line > db.lineCount){
 			System.out.println("Ievadiet pieejamo skaitli!");
 			return;
+		} else if (line == 0){
+			return;
 		}
+		db.outputLine(line);
 		System.out.print("Vai jus velaties izdzest " + line + " rindinu no datubazes (y/n)?: ");
 		String check = "no";
 		check = br.readLine();
 		if (check.equals("yes") || check.equals("y") || check.equals("Y") || check.equals("Yes")){
+			System.out.println("Gramata "+ db.getLineWord(line-1, 1) + " ar autoru " + db.getLineWord(line-1, 0) + " tikka dzesta!");
 			db.deleteLine(line-1);
-		}
+		} 
 	}
 	
 	//4
@@ -358,6 +360,7 @@ public class Main {
 	//3rd option
 	public static void editRecordBookTakerCode(Database db, int line, int column) throws IOException{
 		System.out.println("Lasitaja koda maksimalais simbolu daudzums ir 9!");
+		System.out.println("Ja velaties attirit so lauku, ievadiet: tukss");
 		System.out.print("Ievadiet jauno autora varda pirmo burtu un uzvardu (piem. 191RDB001): ");
 		String edit = "";
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -369,18 +372,23 @@ public class Main {
 		}
 		if (edit.equals("0")){
 			return;
+		} else if (edit.equals("tukss")){
+			edit = "-";
 		} else if (edit.length() != 9){
 			System.out.println("Lasitaja kods sastav no 9 simboliem, nevis no " + edit.length() + "!");
 			return;
 		} else if (checkCodeFormat(edit) == false){
 			System.out.println("Jus izmantojat nepareizo formatu!");
 			return;
-		} 
+		} else {
+			edit = edit.substring(0, 3) + edit.substring(3, 6).toUpperCase() + edit.substring(6);
+		}
 		String prev = db.getLineWord(line-1, column);
-		edit = edit.substring(0, 3) + edit.substring(3, 6).toUpperCase() + edit.substring(6);
 		db.replaceLineWord(line-1, prev, edit);
 		if (prev.equals("-")){
 			System.out.println("Lasitaja kods ir nomainits uz " + edit +"!");
+		} else if (edit.equals("-")){
+			System.out.println("Lasitaja kods "+prev+" ir dzests!");
 		} else {
 			System.out.println("Lasitaja kods ir nomainits no " + prev + " uz " + edit +"!");
 		}
@@ -396,6 +404,7 @@ public class Main {
 	//4th option
 	public static void editRecordBookTakerName(Database db, int line, int column) throws IOException{
 		System.out.println("Gramatas nemeja maksimalais simbolu daudzums ir 13!");
+		System.out.println("Ja velaties attirit so lauku, ievadiet: tukss");
 		System.out.print("Ievadiet jauno gramatas nemeja vardu (piem. Arkadijs): ");
 		String edit = "";
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -407,6 +416,8 @@ public class Main {
 		}
 		if (edit.equals("0")){
 			return;
+		} else if (edit.equals("tukss")){
+			edit = "nav";
 		} else if (edit.length() > 13){
 			System.out.println("Gramatas nemeja varda maksimalais garums ir 13!");
 			return;
@@ -416,12 +427,15 @@ public class Main {
 		}else if (containsSpaces(edit) == false){
 			System.out.println("Ievadiet tikai vardu! Atstarpes nedrikst ievietot");
 			return;
-		} 
+		} else {
+			edit = edit.substring(0, 1).toUpperCase() + edit.substring(1);
+		}
 		String prev = db.getLineWord(line-1, column);
-		edit = edit.substring(0, 1).toUpperCase() + edit.substring(1);
 		db.replaceLineWord(line-1, prev, edit);
 		if (prev.equals("nav")){
 			System.out.println("Gramatas nemeja vards ir nomainits uz " + edit +"!");
+		} else if (edit.equals("nav")){
+			System.out.println("Gramatas nemeja vards "+prev+" ir dzests!");
 		} else {
 			System.out.println("Gramatas nemeja vards ir nomainits no " + prev + " uz " + edit +"!");
 		}
@@ -437,6 +451,7 @@ public class Main {
 	//5th option
 	public static void editRecordBookTakerDate(Database db, int line, int column) throws IOException{
 		System.out.println("Datuma formats ir piemeram 01/01/2020 - diena/menesis/gads!");
+		System.out.println("Ja velaties attirit so lauku, ievadiet: tukss");
 		System.out.print("Ievadiet jauno atgriesanas datumu (piem. 04/05/2020): ");
 		String edit = "";
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -448,6 +463,8 @@ public class Main {
 		}
 		if (edit.equals("0")){
 			return;
+		} else if (edit.equals("tukss")){
+			edit = "--/--/----";
 		} else if (edit.length() != 10){
 			System.out.println("Datumam ir jasastav no 10 simboliem! Jus ievadijat: " + edit.length() + "!");
 			return;
@@ -460,16 +477,18 @@ public class Main {
 
 		if (prev.equals("--/--/----")){
 			System.out.println("Atgiesanas datums ir nomainits uz " + edit +"!");
+		} else if (edit.equals("--/--/----")){
+			System.out.println("Atgriesanas datums "+prev+" ir dzests!");
 		} else {
 			System.out.println("Atgiesanas datums ir nomainits no " + prev + " uz " + edit +"!");
 		}
-		// if ((db.getLineWord(line-1, 3)).equals("-") == false ||
-		// 	(db.getLineWord(line-1, 4)).equals("nav") == false ||
-		// 	(db.getLineWord(line-1, 5)).equals("--/--/----") == false){
-		// 	db.replaceLineWord(line-1, "Ja", "Ne");
-		// } else {
-		// 	db.replaceLineWord(line-1, "Ne", "Ja");
-		// }
+		if ((db.getLineWord(line-1, 3)).equals("-") == false ||
+			(db.getLineWord(line-1, 4)).equals("nav") == false ||
+			(db.getLineWord(line-1, 5)).equals("--/--/----") == false){
+			db.replaceLineWord(line-1, "Ja", "Ne");
+		} else {
+			db.replaceLineWord(line-1, "Ne", "Ja");
+		}
 		return;
 	}
 
@@ -530,7 +549,35 @@ public class Main {
 			return null;
 		}		
 	}
-	
+	//9
+	public static void takeOutBook(Database db) throws IOException{
+		if (db == null){
+			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
+			return;
+		}
+		int line = 0;
+		String enter = "";
+		System.out.println("Ja nevelaties iznemt gramatu spiediet 0!");
+		db.getAvailableBooks();
+		System.out.print("Ievadiet gramatas ID skaitli: ");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			enter = br.readLine();
+			line = Integer.parseInt(enter);
+		} catch (Exception e){
+			System.out.println("Jus ievadijat "+enter+", tas nav skaitlis!");
+			return;
+		}
+		if (line < 0 || line > db.lineCount){
+			System.out.println("Gramats ID, kuru ievadijat, neeksiste");
+			return;
+		}
+		if (db.checkAvailableBook(line) == false){
+			System.out.println("Jus ievadijat nepieejamas gramatas ID!");
+			return;
+		}
+
+	}
 	//0
 	public static boolean exitProgram(){
 		System.out.println("Visu labu!");
