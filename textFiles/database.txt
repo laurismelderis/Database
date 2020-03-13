@@ -1,12 +1,20 @@
-K.Stromberga 100_veidi_ka_pamest_puisi Ne 191RDB003 Anna 15/04/2020
+L.Abols Ka_klut_par_miljonaru Ja - nav --/--/----
+S.Ansasa Tava_mamma_labaka_mamma Ne 191RDB006 Talivaldis 10/04/2020
+B.Jurkalns Maizes_pavara_gramata Ne 191RDB002 Sanja 25/05/2020
+A.Jundze Sarkanais_dzivsudrabs Ne 191RDB009 Niks 10/04/2020
+A.Kalnins Abolini Ja - nav --/--/----
 J.Kreicbergs Causes_of_Road_Accidents Ja - nav --/--/----
 A.Kristals Ka_izdzivot_bez_programmesanas Ne 191RDB005 Jubalts 21/03/2020
-L.Abols Ka_klut_par_miljonaru Ja - nav --/--/----
 L.Melderis Karosu_banka Ja - nav --/--/----
-B.Jurkalns Maizes_pavara_gramata Ne 191RDB002 Sanja 25/05/2020
-Z.Stiepa Rakesu_inzinierija Ne 191RDB004 Aleksandrs 02/07/2020
-G.Spekis Spriedze_bailes_speks Ja - nav --/--/----
-A.Jundze Sarkanais_dzivsudrabs Ne 191RDB009 Niks 10/04/2020
-S.Ansasa Tava_mamma_labaka_mamma Ne 191RDB006 Talivaldis 10/04/2020
 D.Ozola Tagad_un_pirms_102_gadiem Ja - nav --/--/----
 L.Pakavins Amura_piedzivojumi Ne 191RDB069 Sanja 12/12/2025
+K.Stromberga 100_veidi_ka_pamest_puisi Ne 191RDB003 Anna 15/04/2020
+Z.Stiepa Rakesu_inzinierija Ne 191RDB004 Aleksandrs 02/07/2020
+G.Spekis Spriedze_bailes_speks Ja - nav --/--/----
+A.Kapurs Algotie_banditi Ja - nav --/--/----
+L.Slieka Orientacija Ja - nav --/--/----
+I.Opmanis Datorini Ja - nav --/--/----
+O.Skaistkalne Hierarhija_un_tas_principi Ja - nav --/--/----
+P.Ikstens Palidziba_jau_ir_cela Ja - nav --/--/----
+
+I.Lisajs Ilgais_cels_kapas Ja - nav --/--/----

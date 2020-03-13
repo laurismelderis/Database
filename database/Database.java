@@ -232,6 +232,29 @@ public class Database{
 		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
 		br.close();
 	}
+	public void outputLines(int []lines) throws IOException{
+		if (lines == null){
+			System.out.println("Nav datu ko attelot");
+			return;
+		}
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
+		System.out.println("|ID    |AUTORS          |NOSAUKUMS                      |UZ_VIETAS |LASITAJA_KODS |GRAMATAS_NEMEJS     |ATGRIESANAS_DATUMS|");
+		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
+		String add = "";
+		int inc = 1, i = 0;
+		while((add = br.readLine()) != null){
+			String []vec = add.split("\\s");
+			if (i < lines.length && inc == lines[i]){
+				System.out.printf("|%-5d |%-15s |%-30s |%-9s |%-13s |%-19s |%-17s |\n",
+					inc, vec[0], vec[1], vec[2], vec[3], vec[4], vec[5]);
+				i++;
+			}
+			inc++;
+		}
+		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
+		br.close();
+	}
 	public void getAvailableBooks() throws IOException{
 		String [][]matrix = getSplitText(file);
 		int counter = 0;
@@ -246,18 +269,56 @@ public class Database{
 		System.out.println("|ID    |AUTORS          |NOSAUKUMS                      |UZ_VIETAS |LASITAJA_KODS |GRAMATAS_NEMEJS     |ATGRIESANAS_DATUMS|");
 		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
 		String add = "";
-		int inc = 1;
+		int searchedLines[] = getSearchedColumnLines("Ja", 2);
+		counter = 0;
 		while((add = br.readLine()) != null){
 			String []vec = add.split("\\s");
 			if (vec[2].equals("Ja")){
 				System.out.printf("|%-5d |%-15s |%-30s |%-9s |%-13s |%-19s |%-17s |\n",
-					inc, vec[0], vec[1], vec[2], vec[3], vec[4], vec[5]);
-				inc++;
+					searchedLines[counter], vec[0], vec[1], vec[2], vec[3], vec[4], vec[5]);
+				counter++;
 			}
 		}
 		System.out.println("+-------------------------------------------------------------------------------------------------------------------------+");
 		br.close();
 
+	}
+	public int[] getSearchedColumnLines(String name, int column) throws IOException{
+		int lines[] = null;
+		int count = 0, mainCount = 0;
+		char[] letters = name.toCharArray();
+		for(int i = 0; i < lineCount; i++){
+			String word = getLineWord(i, column);
+			for (int j = 0; j < letters.length; j++){
+				if (word.charAt(j) == letters[j]){
+					count++;
+				}
+			}
+			if (count == letters.length){
+				mainCount++;
+			}
+			count = 0;
+		}
+		if (mainCount == 0){
+			return null;
+		}
+		lines = new int[mainCount];
+		mainCount = 0;
+
+		for(int i = 0; i < lineCount; i++){
+			String word = getLineWord(i, column);
+			for (int j = 0; j < letters.length; j++){
+				if (word.charAt(j) == letters[j]){
+					count++;
+				}
+			}
+			if (count == letters.length){
+				lines[mainCount] = i+1;
+				mainCount++;
+			}
+			count = 0;
+		}
+		return lines;
 	}
 	public boolean checkAvailableBook(int id) throws IOException{
 		String [][]matrix = getSplitText(file);
