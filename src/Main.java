@@ -14,14 +14,21 @@ public class Main {
 		String txtFileName = "";
 		Database db = null;
 		boolean exit = false;
+		int entered = 0;
 		System.out.println("Lauris Melderis 14 191RDB078");
 		System.out.println("\nINFORMATIVA SISTEMA BIBLIOTEKAI\n");
 		System.out.println("PIEEJAMAS DATUBAZES:\n" + fileList());
 		db = listFilesAndOpenDatabase(txtFileName, br, db);
 		do {
-			System.out.println("\nIzvelieties attiecigo numuru, lai izpilditu aprakstito komandu:");
-			mainMenu();
-			int entered = enterNumber();
+			if (entered >= 0 && entered <= 8){
+				System.out.println("\nIzvelieties attiecigo numuru, lai izpilditu aprakstito komandu:");
+				mainMenu();
+			} else {
+				System.out.println("\nNepareiza ievade!");
+				System.out.println("\nIzvelieties attiecigo numuru, lai izpilditu aprakstito komandu:");
+				mainMenu();
+			}
+			entered = enterNumber();
 			switch(entered){
 				case 1:
 					openDatabaseTable(db);
@@ -39,15 +46,13 @@ public class Main {
 					sort(db);
 				break;
 				case 6:
+					searchAuthor(db);
 				break;
 				case 7:
 					bookCount(db);
 				break;
 				case 8:
 					db = openNewDatabase(br, txtFileName, db);
-				break;
-				case 9:
-					takeOutBook(db);
 				break;
 				case 0:
 					exit = exitProgram();
@@ -68,10 +73,9 @@ public class Main {
 		System.out.println(" 3 --> Dzest vienumus");
 		System.out.println(" 4 --> Rediget vienumus");
 		System.out.println(" 5 --> Kartot vienumus");
-		System.out.println(" 6 --> Meklet vienumus pec autora---");
+		System.out.println(" 6 --> Meklet vienumus pec autora");
 		System.out.println(" 7 --> Pieejamais gramatu skaits");
 		System.out.println(" 8 --> Atvert jaunu datubazi");
-		System.out.println(" 9 --> Iznemt gramatu---");
 		System.out.println(" 0 --> Iziet no programmas");
 		System.out.println();
 	}
@@ -104,7 +108,7 @@ public class Main {
 		try {
 			entered = Integer.parseInt(str);
 		} catch (Exception e){
-			System.out.println("Ievadiet skaitli nevis kadu citu simbolu!");
+			System.out.println("Ievadiet veselu skaitli!");
 		}
 		return entered;
 	}
@@ -120,16 +124,16 @@ public class Main {
 	
 	//2
 	public static void addRecord(Database db) throws IOException{
+		if (db == null){
+			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
+			return;
+		}
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Ja velaties atcelt vienuma pievienosanu ievadiet 0 !");
 		System.out.println("Autora varda un uzvarda maksimalais garums ir 15 simboli!");
 		String record = "";
 		boolean run = true;
 		String param = "";
-		if (db == null){
-			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
-			return;
-		} 
 		while (run){
 			System.out.print("Ievadiet autora varda pirmo burtu un uzvardu (piem. L.Ozols): ");
 			param = br.readLine();
@@ -517,6 +521,32 @@ public class Main {
 				System.out.println("Kartosanas veids nepastav");
 		}
 	}
+	//6
+	public static void searchAuthor(Database db) throws IOException{
+		if (db == null){
+			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
+			return;
+		}
+		String author = "";
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Ja velaties atgriezties ievadiet 0!");
+		System.out.println("Jus varat meklet autoru pec ta varda un/vai uzvarda");
+		System.out.print("Ievade: ");
+		author = br.readLine();
+		if (isNumeric(author)){
+			System.out.println("Nepareiza ievade! Autors nevar saturet skaitlus");
+			return;
+		} else if (author.isEmpty()){
+			System.out.println("Jus ievadijat tuksumu!");
+			return;
+		}
+		System.out.println("Pec ievades - " + author + " tikka atrasti vienumi: ");
+		int resultLine = 0;
+		author = author.substring(0,1).toUpperCase() + author.substring(1, 2) + 
+		author.substring(2, 3).toUpperCase() + author.substring(3).toLowerCase();
+		int resultLines[] = db.getSearchedColumnLines(author, 0);
+		db.outputLines(resultLines);
+	}
 	
 	//7
 	public static void bookCount(Database db) throws IOException{
@@ -548,35 +578,6 @@ public class Main {
 			System.out.println("Datubaze neeksiste!");
 			return null;
 		}		
-	}
-	//9
-	public static void takeOutBook(Database db) throws IOException{
-		if (db == null){
-			System.out.println("Datubaze nav atverta, lai atvertu to, ievadiet ciparu 8 !");
-			return;
-		}
-		int line = 0;
-		String enter = "";
-		System.out.println("Ja nevelaties iznemt gramatu spiediet 0!");
-		db.getAvailableBooks();
-		System.out.print("Ievadiet gramatas ID skaitli: ");
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		try {
-			enter = br.readLine();
-			line = Integer.parseInt(enter);
-		} catch (Exception e){
-			System.out.println("Jus ievadijat "+enter+", tas nav skaitlis!");
-			return;
-		}
-		if (line < 0 || line > db.lineCount){
-			System.out.println("Gramats ID, kuru ievadijat, neeksiste");
-			return;
-		}
-		if (db.checkAvailableBook(line) == false){
-			System.out.println("Jus ievadijat nepieejamas gramatas ID!");
-			return;
-		}
-
 	}
 	//0
 	public static boolean exitProgram(){
