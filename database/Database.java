@@ -45,6 +45,8 @@ public class Database{
 		record[1] = record[1].substring(0, 1).toUpperCase() + record[1].substring(1);
 		if (br.readLine() == null){
 			bw.append(record[0] + " " + record[1] + " Ja - nav --/--/----");
+		} else if (br.readLine().isEmpty()){
+			bw.append(record[0] + " " + record[1] + " Ja - nav --/--/----");
 		} else {
 			bw.newLine();
 			bw.append(record[0] + " " + record[1] + " Ja - nav --/--/----");
@@ -206,6 +208,9 @@ public class Database{
 		String add = "";
 		int inc = 1;
 		while((add = br.readLine()) != null){
+			if (add.isEmpty()){
+				continue;
+			}
 			String []vec = add.split("\\s");
 			System.out.printf("|%-5d |%-15s |%-30s |%-9s |%-13s |%-19s |%-17s |\n",
 				inc, vec[0], vec[1], vec[2], vec[3], vec[4], vec[5]);
@@ -222,6 +227,9 @@ public class Database{
 		String add = "";
 		int inc = 1;
 		while((add = br.readLine()) != null){
+			if (add.isEmpty()){
+				continue;
+			}
 			String []vec = add.split("\\s");
 			if (inc == line){
 				System.out.printf("|%-5d |%-15s |%-30s |%-9s |%-13s |%-19s |%-17s |\n",
@@ -244,6 +252,9 @@ public class Database{
 		String add = "";
 		int inc = 1, i = 0;
 		while((add = br.readLine()) != null){
+			if (add.isEmpty()){
+				continue;
+			}
 			String []vec = add.split("\\s");
 			if (i < lines.length && inc == lines[i]){
 				System.out.printf("|%-5d |%-15s |%-30s |%-9s |%-13s |%-19s |%-17s |\n",
