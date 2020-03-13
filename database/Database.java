@@ -43,13 +43,11 @@ public class Database{
 		record[0] = record[0].substring(0, 1).toUpperCase() + record[0].substring(1, 2)
 		+ record[0].substring(2, 3).toUpperCase() + record[0].substring(3);
 		record[1] = record[1].substring(0, 1).toUpperCase() + record[1].substring(1);
-		if (br.readLine() == null){
-			bw.append(record[0] + " " + record[1] + " Ja - nav --/--/----");
-		} else if (br.readLine().isEmpty()){
-			bw.append(record[0] + " " + record[1] + " Ja - nav --/--/----");
-		} else {
+		if (!(br.readLine().isEmpty())){
 			bw.newLine();
 			bw.append(record[0] + " " + record[1] + " Ja - nav --/--/----");
+		} else {
+			bw.append(record[0] + " " + record[1] + " Ja - nav --/--/----"); 
 		}
 		bw.close();
 		lineCount++;
