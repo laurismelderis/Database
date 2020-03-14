@@ -4,5 +4,7 @@ M.Sniedzins Kokas_koki Ja - nav --/--/----
 L.Ieksans Tmboresana Ja - nav --/--/----
 O.Olis Kakla_slimibas Ja - nav --/--/----
 L.Iesals Alus_un_veders Ja - nav --/--/----
-
 L.Masnikova Koki_ka_ozoli Ja - nav --/--/----
+I.Olainis Leonida_piedzivojumi Ja - nav --/--/----
+O.Pienenis Pilna_maja Ja - nav --/--/----
+O.Loks Iesmu_gramata Ja - nav --/--/----

@@ -1,2 +1,8 @@
 L.Uzpirkstenis Pilnaks_par_pilnu Ja - nav --/--/----
 L.Rozentals Virsu_griki Ja - nav --/--/----
+I.Talivaldis Iesala_alus Ja - nav --/--/----
+I.Talivaldis Iesala_alus Ja - nav --/--/----
+I.Liesmane Opaps Ja - nav --/--/----
+L.Oaks Piens Ja - nav --/--/----
+L.Oaks Sula Ja - nav --/--/----
+K.Barons Tava_mamma Ja - nav --/--/----

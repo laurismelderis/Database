@@ -4,3 +4,9 @@ rule javac
 build src/Main.class: javac src/Main.java
 build database/Database.class: javac database/Database.java
 build database/Sort.class: javac database/Sort.java
+build ui/AddMode.class: javac ui/AddMode.java
+build ui/DeleteMode.class: javac ui/DeleteMode.java
+build ui/EditMode.class: javac ui/EditMode.java
+build ui/SearchMode.class: javac ui/SearchMode.java
+build ui/SortMode.class: javac ui/SortMode.java
+build src/Utils.class: javac src/Utils.java
