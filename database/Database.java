@@ -43,7 +43,7 @@ public class Database{
 		record[0] = record[0].substring(0, 1).toUpperCase() + record[0].substring(1, 2)
 		+ record[0].substring(2, 3).toUpperCase() + record[0].substring(3);
 		record[1] = record[1].substring(0, 1).toUpperCase() + record[1].substring(1);
-		if (!(br.readLine().isEmpty())){
+		if (!(br.readLine().trim().isEmpty())){
 			bw.newLine();
 			bw.append(record[0] + " " + record[1] + " Ja - nav --/--/----");
 		} else {
@@ -90,16 +90,16 @@ public class Database{
 		File newFile = new File(filePath + "/CopyOf" + fileName);
 		BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
 		String []txt = getText(file);
-		for (int i = 0; i < txt.length; i++){
+		for (int i = 0; i < txt.length-1; i++){
 			if (i == line){
 				continue;
-			}
-			if (i == txt.length-1){
-				bw.write(txt[i] + "^");
+			} else if (i == txt.length-2){
+				bw.write(txt[i].trim());
 				break;
+			} else {
+				bw.write(txt[i].trim() + "^");
+				bw.newLine();
 			}
-			bw.write(txt[i] + "^");
-			bw.newLine();
 		}
 		bw.close();
 		lineCount--;
