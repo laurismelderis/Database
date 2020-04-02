@@ -10,4 +10,4 @@ L.Abols Ka_klut_par_miljonaru Ja - nav --/--/----
 L.Melderis Karosu_banka Ja - nav --/--/----
 A.Kristals Ka_izdzivot_bez_programmesanas Ne 191RDB005 Jubalts 21/03/2020
 A.Grams Kolkas_koks Ja - nav --/--/----
-A.Pirkis Lambada Ja - nav --/--/----
+A.Skais Lambada Ne 191RDB020 nav --/--/----

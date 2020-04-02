@@ -90,17 +90,29 @@ public class Database{
 		File newFile = new File(filePath + "/CopyOf" + fileName);
 		BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
 		String []txt = getText(file);
-		for (int i = 0; i < txt.length-1; i++){
-			if (i == line){
-				continue;
-			} else if (i == txt.length-2){
-				bw.write(txt[i].trim());
-				break;
-			} else {
-				bw.write(txt[i].trim() + "^");
-				bw.newLine();
+		if (line == txt.length-1){
+			for (int i = 0; i < txt.length; i++){
+				if (i == txt.length-2){
+					bw.write(txt[i].trim());
+					break;
+				} else {
+					bw.write(txt[i].trim() + "^");
+					bw.newLine();
+				}
 			}
-		}
+		} else {
+			for (int i = 0; i < txt.length; i++){
+				if (i == line){
+					continue;
+				} else if (i == txt.length-1){
+					bw.write(txt[i].trim());
+					break;
+				} else {
+					bw.write(txt[i].trim() + "^");
+					bw.newLine();
+				}
+			}
+		}	
 		bw.close();
 		lineCount--;
 		pasteFileText(newFile);

@@ -4,5 +4,4 @@ I.Talivaldis Iesala_alus Ja - nav --/--/----
 I.Talivaldis Iesala_alus Ja - nav --/--/----
 I.Liesmane Opaps Ja - nav --/--/----
 L.Oaks Piens Ja - nav --/--/----
-L.Oaks Sula Ja - nav --/--/----
-K.Barons Tava_mamma Ja - nav --/--/----
+O.Loks Sula Ja - nav --/--/----
