@@ -2,6 +2,8 @@ package src;
 
 import java.util.Scanner;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.File;
@@ -10,12 +12,23 @@ import database.Database;
 import ui.*;
 
 public class Main {
+	private static int fileCount = 0;
+	private static boolean failed = false;
 	public static void main(String []args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String txtFileName = "";
 		Database db = null;
 		boolean exit = false;
 		int entered = 0;
+		String files = fileList();
+		if (fileCount == 0){
+			System.out.println("Paslaik nav neviena datubaze izveidota!");
+			System.out.println("Izveidojiet jaunu!");
+			createNewDatabase(br);
+		}
+		if (failed){
+			return;
+		}
 		System.out.println("Lauris Melderis 14 191RDB078");
 		System.out.println("\nINFORMATIVA SISTEMA BIBLIOTEKAI\n");
 		System.out.println("PIEEJAMAS DATUBAZES:\n" + fileList());
@@ -60,6 +73,9 @@ public class Main {
 				case 8:
 					db = openNewDatabase(br, txtFileName, db);
 				break;
+				case 9:
+					createNewDatabase(br);
+				break;
 				case 0:
 					exit = exitProgram();
 				break;
@@ -76,6 +92,7 @@ public class Main {
 		System.out.println(" 6 --> Meklet vienumus pec autora");
 		System.out.println(" 7 --> Pieejamais gramatu skaits");
 		System.out.println(" 8 --> Atvert jaunu datubazi");
+		System.out.println(" 9 --> Izveidot jaunu datubazi");
 		System.out.println(" 0 --> Iziet no programmas");
 		System.out.println();
 	}
@@ -97,6 +114,7 @@ public class Main {
 			if(files[i].isFile()){
 				list += files[i].getName() + " ";
 			}
+			fileCount++;
 		}
 		return list;
 	}
@@ -150,6 +168,22 @@ public class Main {
 			System.out.println("Datubaze neeksiste!");
 			return null;
 		}		
+	}
+
+	//9
+	public static void createNewDatabase(BufferedReader br)throws IOException{
+		System.out.print("Jaunas datubazes nosaukums: ");
+		String newFileName = br.readLine();
+		if (newFileName.isEmpty()){
+			System.out.println("Jus neko neievadijat!");
+			failed = true;
+			return;
+		}
+		File newFile = new File("textFiles/" + newFileName + ".txt");
+		BufferedWriter bw = new BufferedWriter(new FileWriter(newFile, true));
+		bw.write("AUTORS GRAMATA Ne - - -");
+		bw.close();
+		System.out.println("Datubaze " + newFileName + ".txt izveidota!\n");
 	}
 	//0
 	public static boolean exitProgram(){
