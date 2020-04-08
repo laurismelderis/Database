@@ -12,14 +12,23 @@ public class Utils{
 	}
 	public static boolean containsSpaces(String text){
 		char []vec = text.toCharArray();
-		for (int i = 0; i < vec.length; i++){
-			if(vec[i] == ' ' && vec[i] == vec[i+1]){
-				return false;
-			} else if (Character.isLetterOrDigit(vec[i]) == false && vec[i] != ' '){
-				return false;
+		for (char a: vec){
+			if (a == ' ') {
+				return true;
 			}
 		}
-		return true;
+		return false;
+	}
+	public static boolean bookNameContainsSpaces(String text){
+		char []vec = text.toCharArray();
+		for (int i = 0; i < vec.length; i++){
+			if(vec[i] == ' ' && vec[i] == vec[i+1]){
+				return true;
+			} else if (Character.isLetterOrDigit(vec[i]) == false && vec[i] != ' '){
+				return true;
+			}
+		}
+		return false;
 	}
 	public static boolean checkCodeFormat(String text){
 		char []vec = text.toCharArray();

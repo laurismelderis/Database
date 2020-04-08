@@ -97,6 +97,7 @@ public class EditMode{
 		}
 		return line;
 	}
+	//1st option
 	public void editRecordAuthor(Database db, int line, int column) throws IOException{
 		System.out.println("Autora varda un uzvarda maksimalais simbolu daudzums ir 15!");
 		System.out.print("Ievadiet jauno autora varda pirmo burtu un uzvardu (piem. L.Ozols): ");
@@ -118,8 +119,11 @@ public class EditMode{
 		} else if (Utils.isNumeric(edit)){
 			System.out.println("Autora vards un uzvards nedrikst but skaitli");
 			return;
-		}else if (edit.charAt(1) != '.'){
+		} else if (edit.charAt(1) != '.'){
 			System.out.println("Jus izmantojat nepareizo formatu. Otraja pozicija obligati jabut punktam!");
+			return;
+		} else if (Utils.containsSpaces(edit)){
+			System.out.println("Ludzu ievadiet vardu un uzvardu bez atstarpem!");
 			return;
 		} 
 		String prev = db.getLineWord(line-1, column-1);
@@ -148,7 +152,7 @@ public class EditMode{
 		} else if (edit.length() > 30){
 			System.out.println("Gramatas nosaukums ir parak gars! (Max - 30)");
 			return;
-		} else if (Utils.containsSpaces(edit) == false){
+		} else if (Utils.bookNameContainsSpaces(edit)){
 			System.out.println("Jus izmantojat nepareizo formatu un/vai vardu atdala tikai ar vienu atstarpi.");
 			return;
 		} 
@@ -179,6 +183,9 @@ public class EditMode{
 			return;
 		} else if (Utils.checkCodeFormat(edit) == false){
 			System.out.println("Jus izmantojat nepareizo formatu!");
+			return;
+		} else if (Utils.containsSpaces(edit)){
+			System.out.println("Ludzu ievadiet kodu bez atstarpem!");
 			return;
 		} else {
 			edit = edit.substring(0, 3) + edit.substring(3, 6).toUpperCase() + edit.substring(6);
@@ -223,7 +230,7 @@ public class EditMode{
 		} else if (edit.length() < 2){
 			System.out.println("Gramatas nemeja varda minimalais garums ir 3!");
 			return;
-		}else if (Utils.containsSpaces(edit) == false){
+		}else if (Utils.containsSpaces(edit)){
 			System.out.println("Ievadiet tikai vardu! Atstarpes nedrikst ievietot");
 			return;
 		} else {
@@ -268,6 +275,9 @@ public class EditMode{
 			return;
 		} else if (Utils.checkDateFormat(edit) == false){
 			System.out.println("Datums neatbilstam pareizajam formatam");
+			return;
+		}  else if (Utils.containsSpaces(edit)){
+			System.out.println("Ludzu ievadiet datumu bez atstarpem!");
 			return;
 		} 
 		String prev = db.getLineWord(line-1, column);
